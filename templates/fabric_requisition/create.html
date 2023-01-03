@@ -42,7 +42,7 @@
 		<div class="row">
 			<div class="col-xl-9 mx-auto">
 				<div class="ms-auto">
-					<a href="{% url 'store_read' %}" class="btn btn-light radius-30 mt-2 mt-lg-0">
+					<a href="{% url 'fabricr_read' %}" class="btn btn-light radius-30 mt-2 mt-lg-0">
 						<i class="bx bx-grid-alt"></i>Store Table
 					</a>
 				</div>
@@ -83,19 +83,19 @@
 									</div>
 								</div><br>
 
-                                <div class="col-sm-3">
+                                <div class="col-sm-6">
 									<div class="controls">
 										{{ form.floor|as_crispy_field }}
 									</div>
 								</div><br>
 
-                                <div class="col-sm-3">
+                                <div class="col-sm-6">
 									<div class="controls">
 										{{ form.date|as_crispy_field }}
 									</div>
 								</div><br>
 
-                                <div class="col-sm-2">
+                                <div class="col-sm-12">
 									<div class="controls">
 										{{ form.fabric_detail|as_crispy_field }}
 									</div>
@@ -139,7 +139,7 @@
                                                 <div class="form-group col-md-2">
                                                     {{ iform.stock.errors }}
                                                     <label class="panel-body-text">Color:</label>
-                                                    {{ iform.fabric_color }}
+                                                    {{ iform.fab_color }}
                                                 </div>
                                                 <div class="form-group col-md-2">
                                                     {{ iform.stock.errors }}
@@ -151,7 +151,7 @@
                                                     <label class="panel-body-text">Cutting Qty:</label>
                                                     {{ iform.cutting_qty }}
                                                 </div>
-                                                <div class="form-group col-md-2">
+                                                <div class="form-group col-md-3">
                                                     {{ iform.stock.errors }}
                                                     <label class="panel-body-text">Consumption:</label>
                                                     {{ iform.consumption }}
@@ -173,7 +173,7 @@
                                                     {{ iform.quantity }}
                                                 </div>
 
-                                                <div class="form-group col-md-1">
+                                                <div class="form-group col-md-2">
                                                     <label class="panel-body-text">Price:</label>
                                                     <input type="text" class="textinput form-control totalprice" value="1" disabled required>
                                                 </div><!-- Log on to codeastro.com for more projects -->

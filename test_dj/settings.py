@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'category',
     'store',
     'fabric_requisition',
+    'purchase_order',
 ]
 
 MIDDLEWARE = [

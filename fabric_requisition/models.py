@@ -8,6 +8,9 @@ from django.utils.timezone import now
 
 #contains the fabric_requisition bills made
 class FabricRequisitionBill(models.Model):
+    billno = models.AutoField(primary_key=True)
+    time = models.DateTimeField(auto_now=True)
+    
     name = models.CharField(max_length=64, null=True, unique=True, blank=True)
     # srf_designation = models.ForeignKey(StoreReceiver, on_delete=models.CASCADE, blank=False)
     buyer_name = models.CharField(max_length=64, null=True, unique=True, blank=True)

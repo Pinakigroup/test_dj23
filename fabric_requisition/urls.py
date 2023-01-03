@@ -5,6 +5,6 @@ from . import views
 
 urlpatterns = [
     path('create/', views.FabricRequiCreateView.as_view(), name='create'),
-    path('', views.FabricRequiView.as_view(), name='fr_read'),
-    path("bill/<billno>", views.FabricRequiBillView.as_view(), name="store_bill"),
+    path('', views.FabricRequiView.as_view(), name='fabricr_read'),
+    path("bill/<billno>", views.FabricRequiBillView.as_view(), name="fr_bill"),
 ]

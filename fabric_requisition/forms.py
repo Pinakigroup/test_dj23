@@ -16,11 +16,11 @@ class FabricRForm(forms.ModelForm):
         model = FabricRequisitionBill
         fields = ['name', 'buyer_name', 'po_no', 'order_no', 'card_no', 'floor', 'date', 'fabric_detail']
         widgets = {
-            'buyer_name' : forms.Select(attrs = {'class' : 'textinput form-control'}),
+            'buyer_name' : forms.TextInput(attrs = {'class' : 'textinput form-control'}),
             'po_no' : forms.TextInput(attrs = {'class' : 'textinput form-control'}),
             'order_no' : forms.TextInput(attrs = {'class' : 'textinput form-control'}),
             'card_no' : forms.TextInput(attrs = {'class' : 'textinput form-control'}),
-            'floor' : forms.NumberInput(attrs = {'class' : 'textinput form-control'}),
+            'floor' : forms.Select(attrs = {'class' : 'textinput form-control'}),
             'date' : forms.TextInput(attrs = {'class' : 'textinput form-control', 'type': 'date'}),
             'fabric_detail' : forms.Textarea(attrs = {'class' : 'textinput form-control', 'rows'  : '4'}),
         }

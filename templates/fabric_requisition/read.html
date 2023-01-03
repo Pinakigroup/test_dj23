@@ -14,7 +14,7 @@
 							<ol class="breadcrumb mb-0 p-0">
 								<li class="breadcrumb-item"><a href="#"><i class="bx bx-home-alt"></i></a>
 								</li>
-								<li class="breadcrumb-item active" aria-current="page">FabricRequisition Table</li>
+								<li class="breadcrumb-item active" aria-current="page">Fabric Requisition Table</li>
 							</ol>
 						</nav>
 					</div>
@@ -53,7 +53,7 @@
 					</form>
 				</div>
 
-                <div class="ms-auto"><a href="/fabric_requisition/create/" class="btn btn-light radius-30 mt-2 mt-lg-0"><i class="bx bxs-plus-square"></i>Add New FabricRequisition</a></div>
+                <div class="ms-auto"><a href="/fabric_requisition/create/" class="btn btn-light radius-30 mt-2 mt-lg-0"><i class="bx bxs-plus-square"></i>Add New Fabric Requisition</a></div>
 				{% comment %} <h6 class="mb-0 text-uppercase">DataTable Import</h6> {% endcomment %}
 				<hr/>
 				<div class="card">
@@ -78,17 +78,16 @@
                                         <th>Card No</th>
                                         <th>Floor</th>
                                         <th>Date</th>
-                                        <th>Remark</th>
                                         <th>Items</th>
                                         <th>UOM</th>
-                                        <th>Qty</th>
-                                        <th>Total Price</th>
-                                        <th>Style</th>
-                                        <th>Color</th>
+										<th>Style</th>
+										<th>Color</th>
                                         <th>Order Qty</th>
-                                        <th>Cut Qty</th>
-                                        <th>Consumption</th>
-                                        <th>Req Qty</th>
+										<th>Cut Qty</th>
+										<th>Consumption</th>
+										<th>Req Qty</th>
+                                        <th>Supply Qty</th>
+										<th>Detail</th>
 										<th>Actions</th>
 									</tr>
 								</thead>
@@ -127,13 +126,7 @@
                                             {% for item in data.get_items_list %} 
                                                 {{ item.fab_color }} <br> 
                                             {% endfor %}
-                                        </td>
-
-                                        <td>
-                                            {% for item in data.get_items_list %} 
-                                                {{ item.quantity }} <br> 
-                                            {% endfor %}
-                                        </td>     
+                                        </td>  
                                         <td>
                                             {% for item in data.get_items_list %} 
                                                 {{ item.order_qty }} <br> 
@@ -154,7 +147,11 @@
                                                 {{ item.requard_qty }} <br> 
                                             {% endfor %}
                                         </td> 
-                                        <td>৳{{ data.get_total_price }}</td>
+										<td>
+                                            {% for item in data.get_items_list %} 
+                                                {{ item.quantity }} <br> 
+                                            {% endfor %}
+                                        </td>   
                                         <td>{{ data.fabric_detail }}</td>
 
 									   <td class="center">
@@ -172,7 +169,7 @@
 								 {% endfor %}
 								 {% if not bills %}
 								 <tr>
-									 <td colspan="10" class="text-center">No Data available</td>
+									 <td colspan="20" class="text-center">No Data available</td>
 								 </tr>
 								 {% endif %}
 								</tbody>

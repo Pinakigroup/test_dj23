@@ -32,7 +32,7 @@ class FabricRequiCreateView(View):
             billobj = form.save(commit=False)
             billobj.save()     
             # create bill details object
-            # billdetailsobj = StoreBillDetails(billno=billobj)
+            # billdetailsobj = FabricRequisitionBillDetails(billno=billobj)
             # billdetailsobj.save()
             for form in formset:                                                # for loop to save each individual form as its own object
                 # false saves the item and links bill to the item
@@ -43,13 +43,13 @@ class FabricRequiCreateView(View):
                 # calculates the total price
                 billitem.totalprice = billitem.unit_price * billitem.quantity
                 # updates quantity in stock db
-                stock.quantity += billitem.quantity             
+                stock.quantity -= billitem.quantity             
 
                 # saves bill item and stock
                 stock.save()
                 billitem.save()
-            messages.success(request, "Stores items have been registered successfully")
-            return redirect('fr_read')
+            messages.success(request, "Fabric Requisition items have been registered successfully")
+            return redirect('fabricr_read')
         form = FabricRForm(request.GET or None)
         formset = FabricRItemForm(request.GET or None)
         context = {

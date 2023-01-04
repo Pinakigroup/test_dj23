@@ -1,10 +1,10 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-# from . import views
+from . import views
 
 urlpatterns = [
-    # path('create/', views.FabricRequiCreateView.as_view(), name='create'),
-    # path('', views.FabricRequiView.as_view(), name='fabricr_read'),
-    # path("bill/<billno>", views.FabricRequiBillView.as_view(), name="fr_bill"),
+    path('create/', views.PurchasesCreateView.as_view(), name='create'),
+    path('', views.PurchasesView.as_view(), name='pur_read'),
+    path("bill/<billno>", views.PurchasesBillView.as_view(), name="pur_bill"),
 ]

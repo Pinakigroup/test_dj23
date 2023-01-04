@@ -5,28 +5,31 @@ from stock.models import Stock
 
 
 #contains the purchase bills made
-class PurchaseBill(models.Model):
+class PurchasesBill(models.Model):
     billno = models.AutoField(primary_key=True)
     time = models.DateTimeField(auto_now=True)
     
-    supplier = models.ForeignKey(Supplier, on_delete = models.CASCADE, related_name='purchasessupplier')
+    name = models.CharField(max_length=150)
+    phone = models.CharField(max_length=12)
+    address = models.CharField(max_length=200)
+    email = models.EmailField(max_length=254)
 
     def __str__(self):
         return "Bill no: " + str(self.billno)
 
     def get_items_list(self):
-        return PurchaseItem.objects.filter(billno=self)
+        return PurchasesItem.objects.filter(billno=self)
 
     def get_total_price(self):
-        purchaseitems = PurchaseItem.objects.filter(billno=self)
+        purchaseitems = PurchasesItem.objects.filter(billno=self)
         total = 0
         for item in purchaseitems:
             total = total + item.totalprice
         return total
 
 #contains the purchase stocks made   ----->purchase  (Liton)<-----
-class PurchaseItem(models.Model):
-    billno = models.ForeignKey(PurchaseBill, on_delete = models.CASCADE, related_name='purchasesbillno')
+class PurchasesItem(models.Model):
+    billno = models.ForeignKey(PurchasesBill, on_delete = models.CASCADE, related_name='purchasesbillno')
     stock = models.ForeignKey(Stock, on_delete = models.CASCADE, related_name='purchasesitem')
     quantity = models.IntegerField(default=1)
     unit_price = models.IntegerField(default=1)
@@ -37,8 +40,8 @@ class PurchaseItem(models.Model):
     
     
 #contains the other details in the purchases bill
-class PurchaseBillDetails(models.Model):
-    billno = models.ForeignKey(PurchaseBill, on_delete = models.CASCADE, related_name='purchasesdetailsbillno')
+class PurchasesBillDetails(models.Model):
+    billno = models.ForeignKey(PurchasesBill, on_delete = models.CASCADE, related_name='purchasesdetailsbillno')
     
     eway = models.CharField(max_length=50, blank=True, null=True)    
     veh = models.CharField(max_length=50, blank=True, null=True)

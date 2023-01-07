@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from stock.models import Stock
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from .models import StoreBill, StoreBillDetails, StoreItem
 from .forms import StoreDetailsForm, StoreItemFormset, StoreForm, StoreItemForm
 from django.views.generic import (
     View, 
     ListView,
+    DeleteView,
 )
 
 # Create your views here
@@ -99,3 +101,27 @@ class StoreBillView(View):
             'billdetails'   : StoreBillDetails.objects.get(billno=billno),
         }
         return render(request, self.template_name, context)
+    
+# Delete
+# @login_required
+def product_delete(request, pk):
+    get_product = get_object_or_404(StoreBill, pk=pk)
+    get_product.delete()
+    messages.error(request, 'Product delete successfully')
+    return redirect('product_read')
+
+class StoreDeleteView(SuccessMessageMixin, DeleteView):
+    model = StoreBill
+    template_name = "purchases/delete_purchase.html"
+    success_url = '/purchases'
+    
+    def delete(self, *args, **kwargs):
+        self.object = self.get_object()
+        items = StoreItem.objects.filter(billno=self.object.billno)
+        for item in items:
+            stock = get_object_or_404(Stock, name=item.stock.name)
+            if stock.is_deleted == False:
+                stock.quantity -= item.quantity
+                stock.save()
+        messages.success(self.request, "Purchase bill has been deleted successfully")
+        return super(StoreDeleteView, self).delete(*args, **kwargs)

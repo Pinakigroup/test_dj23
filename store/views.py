@@ -104,16 +104,16 @@ class StoreBillView(View):
     
 # Delete
 # @login_required
-def product_delete(request, pk):
-    get_product = get_object_or_404(StoreBill, pk=pk)
-    get_product.delete()
-    messages.error(request, 'Product delete successfully')
-    return redirect('product_read')
+# def product_delete(request, pk):
+#     get_product = get_object_or_404(StoreBill, pk=pk)
+#     get_product.delete()
+#     messages.error(request, 'Product delete successfully')
+#     return redirect('product_read')
 
 class StoreDeleteView(SuccessMessageMixin, DeleteView):
     model = StoreBill
-    template_name = "purchases/delete_purchase.html"
-    success_url = '/purchases'
+    template_name = "store/delete.html"
+    success_url = '/store'
     
     def delete(self, *args, **kwargs):
         self.object = self.get_object()

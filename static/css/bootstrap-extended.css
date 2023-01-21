@@ -120,6 +120,7 @@ a:hover {
     background-color: #ffffff;
     box-shadow: 0 .3rem .8rem rgba(0, 0, 0, .12);
     margin-bottom: 1.5rem;
+	width: 100%;
     border: 0 solid transparent;
 }
 

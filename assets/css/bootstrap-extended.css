@@ -20,7 +20,7 @@ h6 {
 }
 
 a {
-	color: #000000;
+	color: rgb(13, 126, 18);
 	text-decoration: underline
 }
 a:hover {
@@ -67,7 +67,7 @@ a:hover {
 
 .form-control:disabled,
 .form-control[readonly] {
-	background-color: rgb(233 236 239 / 22%);
+	background-color: rgb(206, 206, 206);
 }
 
 
@@ -106,9 +106,9 @@ a:hover {
 }
 
 .btn-light {
-	color: #444444;
-	background-color: #c2c2c2;
-	border-color: #b3b3b3;
+    color: #ffffff;
+    background-color: #2D89EF;
+    border-color: #b3b3b3;
 }
 .btn-light:hover {
 	color: #333;
@@ -117,9 +117,10 @@ a:hover {
 }
 
 .card {
-    background-color: rgb(0 0 0 / 20%);
+    background-color: #ffffff;
     box-shadow: 0 .3rem .8rem rgba(0, 0, 0, .12);
     margin-bottom: 1.5rem;
+	width: 100%;
     border: 0 solid transparent;
 }
 

@@ -60,6 +60,11 @@
 										{{ form.category|as_crispy_field }}
 									</div>
 								</div><br>
+								<select class="js-example-basic-single" name="state">
+									<option value="AL">Alabama</option>
+									{{ form.category|as_crispy_field }}
+									<option value="WY">Wyoming</option>
+								</select>
 								
 								<div class="col-sm-12">
 									<div class="controls">
@@ -86,4 +91,16 @@
 	</div>
 </div>
 <!--end page wrapper -->
+
+
+<script type="text/javascript">
+	// In your Javascript (external .js resource or <script> tag)
+
+		$(document).ready(function() {
+			$('.js-example-basic-single').select2();
+		});
+	
+
+</script>
+
 {% endblock body %}

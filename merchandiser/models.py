@@ -12,6 +12,7 @@ class Merchandiser(models.Model):
     phone = models.CharField(max_length=16, null=True, blank=True, unique=True)
     access_area = models.CharField(max_length=64, blank=True)
     profile_img = models.ImageField(blank=True)
+    dob = models.DateField(default= now)
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated_at = models.DateTimeField(auto_now_add=False, auto_now=True)  
     

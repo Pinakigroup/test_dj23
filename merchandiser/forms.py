@@ -13,7 +13,7 @@ class MerchandiserForm(forms.ModelForm):
         
     class Meta:
         model = Merchandiser
-        fields = ['id', 'office_id', 'name', 'phone', 'email', 'designation', 'access_area', 'profile_img', 'joining_date']
+        fields = ['id', 'office_id', 'name', 'phone', 'email', 'designation', 'access_area', 'profile_img', 'joining_date', 'dob']
         widgets = {
             'office_id' : forms.TextInput(attrs = {'class' : 'textinput form-control'}),
             'designation' : forms.TextInput(attrs = {'class' : 'textinput form-control'}),
@@ -21,5 +21,6 @@ class MerchandiserForm(forms.ModelForm):
             'access_area' : forms.TextInput(attrs = {'class' : 'textinput form-control'}),
             # 'profile_img' : forms.FileField(attrs = {'class': 'rounded_list'}),
             'joining_date' : forms.TextInput(attrs = {'class' : 'textinput form-control', 'type': 'date'}),
+            'dob' : forms.TextInput(attrs = {'class' : 'textinput form-control', 'type': 'date'}),
         }
         

@@ -50,7 +50,7 @@
 				<hr/>
 				<div class="card">
 					<div class="card-body">
-						<form class="row g-3" method="POST">
+						<form class="row g-3" method="POST" id="storeForm" data-stocks-url="{% url 'ajax_load_stocks' %}">
 							{% csrf_token %}	
 
 								<div class="col-sm-6">
@@ -148,7 +148,12 @@
                                         <div class="panel-body">
                                         {% for iform in formset %}
                                             <div class="row form-row">
-                                                <div class="form-group col-md-3">
+                                                <div class="form-group col-md-2">
+                                                    {{ iform.stock.errors }}
+                                                    <label class="panel-body-text">Category:</label>
+                                                    {{ iform.category }}
+                                                </div>
+                                                <div class="form-group col-md-2">
                                                     {{ iform.stock.errors }}
                                                     <label class="panel-body-text">Stock:</label>
                                                     {{ iform.stock }}
@@ -158,7 +163,7 @@
                                                     <label class="panel-body-text">UOM:</label>
                                                     {{ iform.uom }}
                                                 </div>
-                                                <div class="form-group col-md-2">
+                                                <div class="form-group col-md-1">
                                                     {{ iform.stock.errors }}
                                                     <label class="panel-body-text">Fabric Color:</label>
                                                     {{ iform.fabric_color }}
@@ -208,6 +213,38 @@
 	</div>
 </div>
 <!--end page wrapper -->
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#id_category").change(function () {
+        const url = $("#storeForm").attr("data-stocks-url");  // get the url of the `load_stocks` view
+        const categoryId = $(this).val();  // get the selected category ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /persons/ajax/load-stocks/ )
+            data: {
+                'category_id': categoryId       // add the category id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_stocks` view function
+                $("#id_city").html(data);  // replace the contents of the city input with the data that came from the server
+                /*
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (city) {
+                    html_data += `<option value="${city.id}">${city.name}</option>`
+                });
+                console.log(html_data);
+                $("#id_city").html(html_data);
+                */
+            }
+        });
+
+    });
+</script>
+
+
+
 
 
 

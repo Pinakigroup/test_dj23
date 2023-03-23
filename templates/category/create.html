@@ -46,6 +46,11 @@
 											<div class="form-group col-md-12 mb-0">
 												<div class="controls">
 												    {{ form.name|as_crispy_field }}
+
+													{% comment %} {% for field in form %}
+														<label class="my-custom-style" for="{{ field.auto_id }}">{{ field.label }}</label>
+														{{ name }}
+													{% endfor %} {% endcomment %}
 											    </div>
 											</div>
 										</div><br>

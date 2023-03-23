@@ -46,7 +46,7 @@ def category_update(request, pk):
         if form.is_valid():
             form.save()
             # messages.success(request, 'Category updated successfully')
-            return redirect('category_read')
+            return redirect('category_read', pk=pk)
     context = {
         'form': form
     }    

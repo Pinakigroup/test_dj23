@@ -12,3 +12,7 @@ class Supplier(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name_plural = "Requests"
+        verbose_name = "Request"

@@ -56,6 +56,7 @@ class StoreItemForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['stock'].queryset = Stock.objects.filter(is_deleted=False)
+        self.fields['category'].widget.attrs.update({'class': 'textinput form-control'})
         self.fields['stock'].widget.attrs.update({'class': 'textinput form-control setprice stock'})
         self.fields['quantity'].widget.attrs.update({'class': 'textinput form-control setprice quantity', 'min': '0'})
         self.fields['unit_price'].widget.attrs.update({'class': 'textinput form-control setprice price', 'min': '0'})
@@ -63,7 +64,25 @@ class StoreItemForm(forms.ModelForm):
         self.fields['fabric_color'].widget.attrs.update({'class': 'textinput form-control'})
     class Meta:
         model = StoreItem
-        fields = ['stock', 'quantity', 'unit_price', 'uom', 'fabric_color']
+        fields = ['stock', 'category', 'quantity', 'unit_price', 'uom', 'fabric_color']
+        
+    # Dependent Dropdown 
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['stock'].queryset = Stock.objects.none()
+        
+        if 'category' in self.data:
+            try:
+                category_id = int(self.data.get('category'))
+                self.fields['stock'].queryset = Stock.objects.filter(category_id=category_id).order_by('name')
+            except (ValueError, TypeError):
+                pass  # invalid input from the client; ignore and fallback to empty Stock queryset
+        elif self.instance.pk:
+            self.fields['stock'].queryset = self.instance.category.stock_set.order_by('name')
+            
+            
+            
 
 # formset used to render multiple 'StoreItemForm'
 StoreItemFormset = formset_factory(StoreItemForm, extra=1)

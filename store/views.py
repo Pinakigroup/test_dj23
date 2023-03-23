@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
 from stock.models import Stock
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -8,6 +9,7 @@ from django.views.generic import (
     View, 
     ListView,
     DeleteView,
+    UpdateView,
 )
 
 # Create your views here
@@ -125,3 +127,29 @@ class StoreDeleteView(SuccessMessageMixin, DeleteView):
                 stock.save()
         messages.success(self.request, "Purchase bill has been deleted successfully")
         return super(StoreDeleteView, self).delete(*args, **kwargs)
+    
+
+# used to update a supplier's info
+class StoreUpdateView(SuccessMessageMixin, UpdateView):
+    model = StoreBill
+    # form_class = SupplierForm
+    success_url = '/store'
+    success_message = "Store details has been updated successfully"
+    template_name = "suppliers/edit_supplier.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'Edit Supplier'
+        context["savebtn"] = 'Save Changes'
+        context["delbtn"] = 'Delete Supplier'
+        return context
+    
+
+# AJAX
+def load_stocks(request):
+    country_id = request.GET.get('country_id')
+    stocks = Stock.objects.filter(country_id=country_id).order_by('name')
+    context = {
+        'stocks': stocks         
+        }
+    return render(request, 'person/city_dropdown_list_options.html', context)

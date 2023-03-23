@@ -115,6 +115,11 @@
                                         <td>{{ data.fabric_detail }}</td>
                                         <td>
                                             {% for item in data.get_items_list %} 
+                                                {{ item.category.name }} <br> 
+                                            {% endfor %}
+                                        </td>
+                                        <td>
+                                            {% for item in data.get_items_list %} 
                                                 {{ item.stock.name }} <br> 
                                             {% endfor %}
                                         </td>

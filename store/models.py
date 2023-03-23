@@ -1,5 +1,6 @@
 from django.db import models
 from stock.models import Stock
+from category. models import Category
 from django.utils.timezone import now
 from supplier.models import Supplier
 # Create your models here.
@@ -48,7 +49,10 @@ class StoreBill(models.Model):
     
 class StoreItem(models.Model):
     billno = models.ForeignKey(StoreBill, on_delete = models.CASCADE, related_name='storebillno')
-    stock = models.ForeignKey(Stock, on_delete = models.CASCADE, related_name='storeitem')
+    
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=False, null=True)
+    stock = models.ForeignKey(Stock, on_delete=models.SET_NULL, blank=False, null=True)
+    
     quantity = models.IntegerField(default=1)
     unit_price = models.IntegerField(default=0)
     totalprice = models.IntegerField(default=0)

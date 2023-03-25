@@ -65,9 +65,9 @@ class StoreItemForm(forms.ModelForm):
     class Meta:
         model = StoreItem
         fields = ['stock', 'category', 'quantity', 'unit_price', 'uom', 'fabric_color']
-        
+
+
     # Dependent Dropdown 
-    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['stock'].queryset = Stock.objects.none()
@@ -75,11 +75,11 @@ class StoreItemForm(forms.ModelForm):
         if 'category' in self.data:
             try:
                 category_id = int(self.data.get('category'))
-                self.fields['stock'].queryset = Stock.objects.filter(category_id=category_id).order_by('name')
+                self.fields['stock'].queryset = Stock.objects.filter(category_id=category_id).order_by('billno')
             except (ValueError, TypeError):
                 pass  # invalid input from the client; ignore and fallback to empty Stock queryset
         elif self.instance.pk:
-            self.fields['stock'].queryset = self.instance.category.stock_set.order_by('name')
+            self.fields['stock'].queryset = self.instance.category.stock_set.order_by('billno')
             
             
             

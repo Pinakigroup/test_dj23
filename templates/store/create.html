@@ -50,7 +50,7 @@
 				<hr/>
 				<div class="card">
 					<div class="card-body">
-						<form class="row g-3" method="POST" id="storeForm" data-stocks-url="{% url 'ajax_load_stocks' %}">
+						<form class="row g-3" method="POST" id="personForm" data-stocks-url="{% url 'ajax_load_stocks' %}">
 							{% csrf_token %}	
 
 								<div class="col-sm-6">
@@ -219,7 +219,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     $("#id_category").change(function () {
-        const url = $("#storeForm").attr("data-stocks-url");  // get the url of the `load_stocks` view
+        const url = $("#personForm").attr("data-stocks-url");  // get the url of the `load_stocks` view
         const categoryId = $(this).val();  // get the selected category ID from the HTML input
 
         $.ajax({                       // initialize an AJAX request
@@ -228,24 +228,19 @@
                 'category_id': categoryId       // add the category id to the GET parameters
             },
             success: function (data) {   // `data` is the return of the `load_stocks` view function
-                $("#id_city").html(data);  // replace the contents of the city input with the data that came from the server
+                $("#id_stock").html(data);  // replace the contents of the city input with the data that came from the server
                 /*
                 let html_data = '<option value="">---------</option>';
-                data.forEach(function (city) {
-                    html_data += `<option value="${city.id}">${city.name}</option>`
+                data.forEach(function (stock) {
+                    html_data += `<option value="${stock.id}">${stock.name}</option>`
                 });
                 console.log(html_data);
-                $("#id_city").html(html_data);
+                $("#id_stock").html(html_data);
                 */
             }
         });
-
     });
 </script>
-
-
-
-
 
 
 <script type="text/javascript" src="{% static 'js/jquery-3.2.1.slim.min.js' %}"></script>

@@ -7,8 +7,7 @@
 
 <option value="">---------</option>
 {% for stock in stocks %}
-<option value="{{ stock.pk }}">{{ stock.name }}</option>
+<option value="{{ stock.pk }}">{{ stock.stock }}</option>
 {% endfor %}
-
 
 {% endblock body %}

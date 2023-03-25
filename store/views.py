@@ -148,7 +148,7 @@ class StoreUpdateView(SuccessMessageMixin, UpdateView):
 # AJAX
 def load_stocks(request):
     country_id = request.GET.get('country_id')
-    stocks = Stock.objects.filter(country_id=country_id).order_by('name')
+    stocks = Stock.objects.filter(country_id=country_id).order_by('stock')
     context = {
         'stocks': stocks         
         }

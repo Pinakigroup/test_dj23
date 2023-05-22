@@ -1,0 +1,155 @@
+<form class="row g-3" method="POST" id="personForm" data-stocks-url="{% url 'ajax_load_stocks' %}">
+    {% csrf_token %}	
+
+        <div class="col-sm-6">
+            <div class="controls">
+                {{ form.supplier|as_crispy_field }}
+            </div>
+        </div><br>
+
+        <div class="col-sm-6">
+            <div class="controls">
+                {{ form.buyer_name|as_crispy_field }}
+            </div>
+        </div><br>
+
+        <div class="col-sm-4">
+            <div class="controls">
+                {{ form.report|as_crispy_field }}
+            </div>
+        </div><br>
+
+        <div class="col-sm-4">
+            <div class="controls">
+                {{ form.report_no|as_crispy_field }}
+            </div>
+        </div><br>
+
+        <div class="col-sm-4">
+            <div class="controls">
+                {{ form.report_date|as_crispy_field }}
+            </div>
+        </div><br>
+
+        <div class="col-sm-3">
+            <div class="controls">
+                {{ form.po_no|as_crispy_field }}
+            </div>
+        </div><br>
+
+        <div class="col-sm-3">
+            <div class="controls">
+                {{ form.lc|as_crispy_field }}
+            </div>
+        </div><br>
+
+        <div class="col-sm-2">
+            <div class="controls">
+                {{ form.style_no|as_crispy_field }}
+            </div>
+        </div><br>
+
+        <div class="col-sm-2">
+            <div class="controls">
+                {{ form.file_no|as_crispy_field }}
+            </div>
+        </div><br>
+
+        <div class="col-sm-2">
+            <div class="controls">
+                {{ form.lot_no|as_crispy_field }}
+            </div>
+        </div><br>
+
+        <div class="col-sm-12">
+            <div class="controls">
+                {{ form.fabric_detail|as_crispy_field }}
+            </div>
+        </div><br>
+
+        <div class="col-sm-6">
+            <div class="controls">
+                {{ form.store_location|as_crispy_field }}
+            </div>
+        </div><br>
+
+        <div class="col-sm-6">
+            <div class="controls">
+                {{ form.order_qty|as_crispy_field }}
+            </div>
+        </div><br>
+{% comment %} 
+    <div class="form-actions">
+        <button type="submit" class="btn btn-light">Save changes</button>
+        <button type="reset" class="btn">Cancel</button>
+    </div> {% endcomment %}
+
+
+
+
+    <div class="panel panel-default">
+
+        {{ formset.management_form }}
+        <h1>Product Details</h1>
+        
+            <div id="stockitem"> 
+                <div class="panel-body">
+                {% for iform in formset %}
+                    <div class="row form-row">
+                        <div class="form-group col-md-2">
+                            {{ iform.stock.errors }}
+                            <label class="panel-body-text">Category:</label>
+                            {{ iform.category }}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {{ iform.stock.errors }}
+                            <label class="panel-body-text">Stock:</label>
+                            {{ iform.stock }}
+                        </div>
+                        <div class="form-group col-md-1">
+                            {{ iform.stock.errors }}
+                            <label class="panel-body-text">UOM:</label>
+                            {{ iform.uom }}
+                        </div>
+                        <div class="form-group col-md-1">
+                            {{ iform.stock.errors }}
+                            <label class="panel-body-text">Fabric Color:</label>
+                            {{ iform.fabric_color }}
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label class="panel-body-text">Price per item:</label>
+                            {{ iform.unit_price }}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {{ iform.quantity.errors }}
+                            <label class="panel-body-text">Quantity:</label>
+                            {{ iform.quantity }}
+                        </div>
+
+                        <div class="form-group col-md-1">
+                            <label class="panel-body-text">Price:</label>
+                            <input type="text" class="textinput form-control totalprice" value="1" disabled required>
+                        </div><!-- Log on to codeastro.com for more projects -->
+                        <div class="form-group col-md-1">
+                            <label class="panel-body-text" style="color: #000">.</label>
+                            <button class="form-control btn btn-danger remove-form-row">-</button>
+                        </div>
+                    </div>
+                {% endfor %}
+                    <div style="text-align: right;">                    
+                        <a href="#" class="add-form-row">+ Add More</a>
+                    </div>
+                </div>
+            </div>
+
+
+        <br>
+
+        <div class="align-middle">
+            <button type="submit" class="btn btn-success">Add to Store</button>
+            {% comment %} <a href="{% url 'sales-list' %}" class="btn btn-secondary">Cancel</a> {% endcomment %}
+        </div>
+        
+    </div>
+
+</form>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Form</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#id_person').change(function() {
+                var personId = $(this).val();
+
+                $.ajax({
+                    url: '/fetch_person_details/',
+                    data: {
+                        'person_id': personId
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#id_phone').val(data.phone);
+                        $('#id_email').val(data.email);
+                        $('#id_city').val(data.city);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>Employee Form</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

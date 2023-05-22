@@ -12,5 +12,3 @@ class StockForm(forms.ModelForm):
     class Meta:
         model = Stock
         fields = ['category', 'name', 'quantity']
-        
-        

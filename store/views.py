@@ -3,8 +3,10 @@ from django.http import JsonResponse
 from stock.models import Stock
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from .models import StoreBill, StoreBillDetails, StoreItem
-from .forms import StoreDetailsForm, StoreItemFormset, StoreForm, StoreItemForm
+from .forms import StoreDetailsForm, StoreItemFormset, StoreForm, StoreItemForm, StockSearchForm2
 from django.views.generic import (
     View, 
     ListView,
@@ -62,11 +64,36 @@ class StoreCreateView(View):
         }
         return render(request, self.template_name, context)
     
-class StoreView(ListView):
-    model = StoreBill 
-    template_name = 'store/read.html'
-    context_object_name = 'bills'
-    ordering = ['-time']
+# Class Base 
+# class StoreView(ListView):
+#     model = StoreBill 
+#     template_name = 'store/read.html'
+#     context_object_name = 'bills'
+#     ordering = ['-time']
+    
+# Functions Base 
+@method_decorator(login_required, name='dispatch')
+def store_read(request):
+    form = StockSearchForm2(request.POST or None)
+    bills = StoreBill.objects.all()
+    context = {
+        'bills':bills,
+        'form':form,
+    }
+    if request.method == 'POST':
+        bills = StoreBill.objects.filter(
+										date_created__range=[
+																form['start_date'].value(),
+																form['end_date'].value()
+															]
+										)
+    context = {
+        'bills':bills,
+        'form':form,
+    }
+    return render(request, 'store/read.html', context)
+    
+    
     
 class StoreBillView(View):
     model = StoreBill
@@ -148,7 +175,7 @@ class StoreUpdateView(SuccessMessageMixin, UpdateView):
 # AJAX
 def load_stocks(request):
     country_id = request.GET.get('country_id')
-    stocks = Stock.objects.filter(country_id=country_id).order_by('stock')
+    stocks = Stock.objects.filter(country_id=country_id).order_by('name')
     context = {
         'stocks': stocks         
         }

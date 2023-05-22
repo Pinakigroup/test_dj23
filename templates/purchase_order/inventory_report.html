@@ -1,0 +1,15 @@
+<h1>Inventory Report for {{ current_month }} {{ current_year }}</h1>
+<table>
+  <tr>
+    <th>Item Name</th>
+    <th>Quantity</th>
+    <th>Date Added</th>
+  </tr>
+  {% for item in inventory_items %}
+  <tr>
+    <td>{{ item.name }}</td>
+    <td>{{ item.quantity }}</td>
+    <td>{{ item.date_added }}</td>
+  </tr>
+  {% endfor %}
+</table>

@@ -9,7 +9,9 @@ class PurchaseBill(models.Model):
     billno = models.AutoField(primary_key=True)
     time = models.DateTimeField(auto_now=True)
     supplier = models.ForeignKey(Supplier, on_delete = models.CASCADE, related_name='purchasesupplier')
-
+    
+    file_no = models.CharField(max_length=64, blank=True, null=True)
+    
     def __str__(self):
         return "Bill no: " + str(self.billno)
 

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <form method="post" action="{% url 'show_data' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+    
+    {% if my_data %}
+        <h2>Data:</h2>
+        <p>Name: {{ my_data.name }}</p>
+        <p>Age: {{ my_data.age }}</p>
+        <!-- Add more fields as per your requirements -->
+    {% endif %}
+
+</body>
+</html>

@@ -5,7 +5,7 @@ from stock.models import Stock
 from django.contrib import messages
 from .models import PurchaseBill, PurchaseBillDetails, PurchaseItem
 from purchase.forms import PurchaseItemFormset
-from .forms import PurchaseDetailsForm, PurchaseItemFormset
+from .forms import PurchaseDetailsForm, PurchaseItemFormset, PurchaseForm
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import (
     View, 
@@ -39,20 +39,25 @@ class PurchaseCreateView(View):
     template_name = 'purchase/create.html'                                      # Liton ------> Just a varisble asign template path        
 
     def get(self, request, pk):
+        form = PurchaseForm(request.GET or None)
         formset = PurchaseItemFormset(request.GET or None)                      # renders an empty formset
         supplierobj = get_object_or_404(Supplier, pk=pk)                        # gets the supplier object
         context = {
+            'form'      : form,
             'formset'   : formset,
             'supplier'  : supplierobj,
         }                                                                       # sends the supplier and formset as context
         return render(request, self.template_name, context)
 
     def post(self, request, pk):
+        form = PurchaseForm(request.POST)
+        
         formset = PurchaseItemFormset(request.POST)                             # recieves a post method for the formset
         supplierobj = get_object_or_404(Supplier, pk=pk)                        # gets the supplier object
-        if formset.is_valid():
+        if form.is_valid() and formset.is_valid():
             # saves bill
             billobj = PurchaseBill(supplier=supplierobj)                        # a new object of class 'PurchaseBill' is created with supplier field set to 'supplierobj'
+            billobj = form.save(commit=False)
             billobj.save()                                                      # saves object into the db
             # create bill details object
             # billdetailsobj = PurchaseBillDetails(billno=billobj)
@@ -74,6 +79,7 @@ class PurchaseCreateView(View):
             return redirect('purchases_list')
         formset = PurchaseItemFormset(request.GET or None)
         context = {
+            'form'      : form,
             'formset'   : formset,
             'supplier'  : supplierobj
         }

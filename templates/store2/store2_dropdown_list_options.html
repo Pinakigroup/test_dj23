@@ -1,0 +1,20 @@
+{% comment %} {% extends 'base/base.html' %} 
+{% block title %}select Store2{% endblock title %} 
+{% block body %} 
+{% load crispy_forms_tags %}
+{% load static %}		
+
+
+<option value="">---------</option>
+{% for stock in stocks %}
+<option value="{{ stock.pk }}">{{ stock.billno }}</option>
+{% endfor %}
+
+
+{% endblock body %} {% endcomment %}
+
+
+<option value="">---------</option>
+{% for stock in stocks %}
+<option value="{{ stock.pk }}">{{ stock.name }}</option>
+{% endfor %}

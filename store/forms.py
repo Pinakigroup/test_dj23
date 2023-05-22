@@ -2,6 +2,7 @@ from django import forms
 from django.forms import formset_factory
 from .models import StoreBill, StoreItem, StoreBillDetails
 from stock.models import Stock
+from category.models import Category
 
 # form used to get customer details
 class StoreForm(forms.ModelForm):
@@ -55,19 +56,31 @@ class StoreForm(forms.ModelForm):
 class StoreItemForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['category'].queryset = Category.objects.filter(is_deleted=False)
         self.fields['stock'].queryset = Stock.objects.filter(is_deleted=False)
+        
         self.fields['category'].widget.attrs.update({'class': 'textinput form-control'})
         self.fields['stock'].widget.attrs.update({'class': 'textinput form-control setprice stock'})
-        self.fields['quantity'].widget.attrs.update({'class': 'textinput form-control setprice quantity', 'min': '0'})
-        self.fields['unit_price'].widget.attrs.update({'class': 'textinput form-control setprice price', 'min': '0'})
+        self.fields['quantity'].widget.attrs.update({'class': 'textinput form-control setprice quantity', 'min': '1'})
+        self.fields['unit_price'].widget.attrs.update({'class': 'textinput form-control setprice price', 'min': '1'})
         self.fields['uom'].widget.attrs.update({'class': 'textinput form-control'})
         self.fields['fabric_color'].widget.attrs.update({'class': 'textinput form-control'})
     class Meta:
         model = StoreItem
         fields = ['stock', 'category', 'quantity', 'unit_price', 'uom', 'fabric_color']
+    
+        # widgets = {           
+        #     'category' : forms.Select(attrs = {'class' : 'textinput form-control'}),            
+        #     'stock' : forms.Select(attrs = {'class' : 'textinput form-control'}),   
+        #     'quantity' : forms.NumberInput(attrs = {'class' : 'textinput form-control'}),         
+        #     'unit_price' : forms.NumberInput(attrs = {'class' : 'textinput form-control'}),         
+        #     'uom' : forms.Select(attrs = {'class' : 'textinput form-control'}),         
+        #     'fabric_color' : forms.TextInput(attrs = {'class' : 'textinput form-control'}),         
+        # }
 
 
     # Dependent Dropdown 
+                
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['stock'].queryset = Stock.objects.none()
@@ -75,11 +88,11 @@ class StoreItemForm(forms.ModelForm):
         if 'category' in self.data:
             try:
                 category_id = int(self.data.get('category'))
-                self.fields['stock'].queryset = Stock.objects.filter(category_id=category_id).order_by('billno')
+                self.fields['stock'].queryset = Stock.objects.filter(category_id=category_id).order_by('name')
             except (ValueError, TypeError):
-                pass  # invalid input from the client; ignore and fallback to empty Stock queryset
+                pass  # invalid input from the client; ignore and fallback to empty stock queryset
         elif self.instance.pk:
-            self.fields['stock'].queryset = self.instance.category.stock_set.order_by('billno')
+            self.fields['stock'].queryset = self.instance.category.stock_set.order_by('name')
             
             
             
@@ -93,3 +106,11 @@ class StoreDetailsForm(forms.ModelForm):
     class Meta:
         model = StoreBillDetails
         fields = ['eway','veh', 'destination', 'po', 'cgst', 'sgst', 'igst', 'cess', 'tcs', 'total']
+        
+        
+class StockSearchForm2(forms.ModelForm):
+    start_date = forms.DateTimeField(label="Your Name", widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'date'}), required=True)
+    end_date = forms.DateTimeField(label="Your Name", widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'date'}), required=True)
+    class Meta:
+        model = StoreBill
+        fields = ['start_date', 'end_date']

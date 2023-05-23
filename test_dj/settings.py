@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # Third party app
     'crispy_forms',
     'colorfield',
+    'rest_framework',
     # app
     'stock',
     'merchandiser',
